@@ -10,15 +10,18 @@
 ![Screenshot 2024-10-16 134301](https://github.com/user-attachments/assets/aec50503-251a-4878-8e6e-e6538aaf5a83)
 
 ### JAWABAN :
-- Code Kriptografi Playfair.py
-  ```
-  import numpy as np
+> Code Kriptografi Playfair.py
+```
+import numpy as np
+
+# Generate the Playfair matrix
 def generate_playfair_matrix(key):
     key = ''.join(sorted(set(key), key=key.index)).replace('J', 'I')  # Remove duplicates and replace J with I
     alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
     matrix = key + ''.join([c for c in alphabet if c not in key])
     return np.array([list(matrix[i:i + 5]) for i in range(0, 25, 5)])
-    
+
+# Preprocess the text (for both encryption and decryption)
 def preprocess_text(text):
     text = text.replace('J', 'I').replace(' ', '').upper()
     processed_text = ''
@@ -35,10 +38,12 @@ def preprocess_text(text):
         processed_text += 'X'
     return processed_text
 
+# Find position of the character in the matrix
 def find_position(matrix, char):
     pos = np.where(matrix == char)
     return pos[0][0], pos[1][0]
 
+# Encrypt using Playfair Cipher
 def playfair_encrypt(plaintext, key):
     matrix = generate_playfair_matrix(key)
     plaintext = preprocess_text(plaintext)
@@ -60,6 +65,7 @@ def playfair_encrypt(plaintext, key):
     
     return ciphertext
 
+# Decrypt using Playfair Cipher
 def playfair_decrypt(ciphertext, key):
     matrix = generate_playfair_matrix(key)
     plaintext = ''
@@ -77,7 +83,10 @@ def playfair_decrypt(ciphertext, key):
         else:
             plaintext += matrix[row1, col2]
             plaintext += matrix[row2, col1]
+    
     return plaintext
+
+# Main
 key = "TEKNIKINFORMATIKA"
 texts = [
     "GOOD BROOM SWEEP CLEAN",
@@ -94,12 +103,13 @@ for text in texts:
     print(f"Encrypted: {encrypted}")
     print(f"Decrypted: {decrypted}")
     print("----------")
-
-  ```
+```
+  
 
 
 ### Output :
 
+![Screenshot 2024-10-16 135811](https://github.com/user-attachments/assets/cd63fc4b-be41-4cda-9653-3d2997bde109)
 
 
 ![Screenshot 2024-10-16 135746](https://github.com/user-attachments/assets/1cc78658-59f8-4a9c-aebc-da7179f5da30)
